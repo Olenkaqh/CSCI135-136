@@ -1,9 +1,9 @@
 /*
 
+
   Description:
     The program reads a PGM image from the file "inImage.pgm",
-    and outputs a modified image to "outImage.pgm" and and creates a white box 
-    in the middle of the image
+    and outputs a modified image to "outImage.pgm" and scales the original pic to 200% of its size
 */
 
 
@@ -97,22 +97,16 @@ int main() {
 	int out[MAX_H][MAX_W]; // copy image created to be modified
 
 	for(int row = 0; row < h; row++) {
-		for(int col = 0; col < w ; col++) {
-			if( row >= h/4 && row <= 3*h/4 && col >= w/4 && col <= 3*w/4) // checks if column and row is within the area wanted
-			{
-				out[row][col] = 255;  //changes the intensity to white
-				
-			}
-			else
-			{
-				out[row][col] = img[row][col]; // otherwise the pixels stay with the same intensity
+		for(int col = 0; col < w; col++) {
 
-			}
-			
+			out[2*row][2*col] =  img[row][col]; //assigns pixels for row and col
+			out[2*row][2*col+1] =  img[row][col]; //assigns pixels for row and the next col
+			out[2*row+1][2*col] =  img[row][col]; //assigns pixels for next row and the col
+			out[2*row+1][2*col+1] =img[row][col];	//assigns pixes for next row and next col
 		}
 	}
 
 	// and save this new image to file "outImage.pgm"
-	writeImage(out, h, w);
+	writeImage(out, h*2, w*2);
 
 }

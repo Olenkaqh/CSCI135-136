@@ -1,9 +1,9 @@
 /*
 
+	
   Description:
     The program reads a PGM image from the file "inImage.pgm",
-    and outputs a modified image to "outImage.pgm" and and creates a white box 
-    in the middle of the image
+    and outputs a modified image to "outImage.pgm" 
 */
 
 
@@ -85,7 +85,7 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 int main() {
 
 	int img[MAX_H][MAX_W];
-	int h, w; // h is rows and w is columns
+	int h, w;
 
 	readImage(img, h, w); // read it from the file "inImage.pgm"
 	// h and w were passed by reference and
@@ -94,21 +94,11 @@ int main() {
 
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
-	int out[MAX_H][MAX_W]; // copy image created to be modified
+	int out[MAX_H][MAX_W];
 
 	for(int row = 0; row < h; row++) {
-		for(int col = 0; col < w ; col++) {
-			if( row >= h/4 && row <= 3*h/4 && col >= w/4 && col <= 3*w/4) // checks if column and row is within the area wanted
-			{
-				out[row][col] = 255;  //changes the intensity to white
-				
-			}
-			else
-			{
-				out[row][col] = img[row][col]; // otherwise the pixels stay with the same intensity
-
-			}
-			
+		for(int col = 0; col < w; col++) {
+			out[row][col] = 255 - img[row][col];
 		}
 	}
 
@@ -116,3 +106,4 @@ int main() {
 	writeImage(out, h, w);
 
 }
+

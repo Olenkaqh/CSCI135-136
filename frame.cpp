@@ -2,8 +2,8 @@
 
   Description:
     The program reads a PGM image from the file "inImage.pgm",
-    and outputs a modified image to "outImage.pgm" and and creates a white box 
-    in the middle of the image
+    and outputs a modified image to "outImage.pgm" and and creates a white frame around
+    an area where the white box was.
 */
 
 
@@ -98,14 +98,33 @@ int main() {
 
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w ; col++) {
-			if( row >= h/4 && row <= 3*h/4 && col >= w/4 && col <= 3*w/4) // checks if column and row is within the area wanted
+			if( row == h/4 || row == 3*h/4) // checks if the row is part of the desired perimeter
 			{
-				out[row][col] = 255;  //changes the intensity to white
-				
+				if (col >= w/4 && col <= 3*w/4) //checks if col is within the desired perimeter at that row
+				{
+					out[row][col] = 255; //changes pixel to white
+				}
+				else
+				{
+					out[row][col] = img[row][col]; //keeps the pixels
+				}
+
+			}
+
+			else if( col == w/4 || col == 3*w /4) //checks if the col is within the desired perimeter
+			{
+				if (row >= h/4 && row <= 3*h/4) // checks if the row is within the desired perimiter at that col
+				{
+					out[row][col] = 255; //changes pixel to white
+				}
+				else
+				{
+					out[row][col] = img[row][col]; //keeps the pixels
+				}
 			}
 			else
 			{
-				out[row][col] = img[row][col]; // otherwise the pixels stay with the same intensity
+				out[row][col] = img[row][col]; //if none of the conditions is met, the pixels stay with the same intensity
 
 			}
 			
